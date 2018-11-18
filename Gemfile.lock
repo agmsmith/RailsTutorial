@@ -82,6 +82,9 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
+    passenger (5.3.7)
+      rack
+      rake (>= 0.8.1)
     pg (0.20.0)
     puma (3.9.1)
     rack (2.0.6)
@@ -167,6 +170,7 @@ DEPENDENCIES
   jbuilder (= 2.7.0)
   jquery-rails (= 4.3.1)
   listen (= 3.1.5)
+  passenger (>= 5.3.2)
   pg (= 0.20.0)
   puma (= 3.9.1)
   rails (= 5.1.6)
