@@ -8,11 +8,9 @@ gem 'coffee-rails', '4.2.2'
 gem 'jquery-rails', '4.3.1'
 gem 'turbolinks',   '5.0.1'
 gem 'jbuilder',     '2.7.0'
-gem 'yarn',         '0.1.1'
-gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
+gem 'sqlite3', '1.3.13'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.13'
   gem 'byebug',  '9.0.6', platform: :mri
 end
 
@@ -24,5 +22,4 @@ group :development do
 end
 
 group :production do
-  gem 'pg', '0.20.0'
 end
