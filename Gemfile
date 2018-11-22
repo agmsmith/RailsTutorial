@@ -22,5 +22,5 @@ group :development do
 end
 
 group :production do
-  gem "passenger", ">= 5.3.7", require: "phusion_passenger/rack_handler"
+  gem "passenger", '5.3.6', require: "phusion_passenger/rack_handler"
 end
