@@ -22,8 +22,4 @@ test:
 
 production:
   <<: *default
-  adapter: postgresql
-  encoding: unicode
-  database: ffvso_production
-  username: ffvso
-  password: password1
+  database: db/production.sqlite3
