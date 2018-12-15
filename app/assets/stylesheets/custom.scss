@@ -26,7 +26,7 @@ textarea {
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
+  line-height: 1em;
 }
 
 h1 {
@@ -75,26 +75,22 @@ footer {
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
   color: #777;
-}
+  a {
+    color: #555;
+    &:hover {
+      color: #222;
+    }
+  }
+  small {
+    float: left;
+  }
 
-footer a {
-  color: #555;
-}
-
-footer a:hover {
-  color: #222;
-}
-
-footer small {
-  float: left;
-}
-
-footer ul {
-  float: right;
-  list-style: none;
-}
-
-footer ul li {
-  float: left;
-  margin-left: 15px;
+  ul {
+    float: right;
+    list-style: none;
+     li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
 }
