@@ -64,4 +64,12 @@ class UserTest < ActiveSupport::TestCase
     assert_not duplicate_user.valid?
   end
 
+  test "email should be converted to lower case upon saving to database" do
+    mixed_name = "Test@Somewhere.com"
+    @user.email = mixed_name
+    assert @user.email == mixed_name
+    @user.save
+    assert @user.email != mixed_name
+    assert @user.email == mixed_name.downcase
+  end
 end
