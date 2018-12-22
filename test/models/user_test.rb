@@ -69,7 +69,10 @@ class UserTest < ActiveSupport::TestCase
     @user.email = mixed_name
     assert @user.email == mixed_name
     @user.save
-    assert @user.email != mixed_name
-    assert @user.email == mixed_name.downcase
+    @user.reload
+    assert_not_equal mixed_name, @user.email,
+      "Name should be different from the original #{mixed_name} when saving."
+    assert_equal mixed_name.downcase, @user.email,
+      "Should have become lower case."
   end
 end
