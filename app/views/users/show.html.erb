@@ -1,0 +1,6 @@
+<%= provide(:title, 'Show User') %>
+
+<p><%= @user.name %>, <%= @user.email %><br>
+<small>Created: <%= @user.created_at %><br>
+Updated: <%= @user.updated_at %><br>
+Now: <%= Time.now.utc %></small></p>
