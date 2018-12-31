@@ -36,4 +36,24 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_select "form[action=?]", signup_path
   end
 
+  test "valid signup should create a new user" do
+    get signup_path
+    assert_difference 'User.count', 1 do
+      post signup_path, params: {
+        user: {
+          name: "Rails Tutorial",
+          email: "example@railstutorial.org",
+          password: "foobar",
+          password_confirmation: "foobar"
+        }
+      }
+    end
+    follow_redirect!
+    assert_template 'users/show'
+    assert flash.count == 1,
+      "Should be one item in the flash hash, have #{flash.count}."
+    assert_select "div.alert-success", {count: 1,
+      text: "Welcome to the Sample Application, Rails Tutorial!"}
+  end
+
 end
