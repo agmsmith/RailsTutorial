@@ -5,7 +5,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   test "invalid signup doesn't create new user" do
     get signup_path
     assert_no_difference 'User.count' do
-      post users_path, params: {
+      post signup_path, params: {
         user: {
           name: "",
           email: "user@invalid",
@@ -19,7 +19,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
 
   test "empty signup has enough error messages" do
     get signup_path
-    post users_path, params: { user: { name: "  " }}
+    post signup_path, params: { user: { name: "  " }}
     N = 6
     # Verify that there are N error messages.
     assert_select "div#error_explanation" do
@@ -29,6 +29,11 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
         assert_select "li", count: N
       end
     end
+  end
+
+  test "signup page should submit to the signup page URL" do
+    get signup_path
+    assert_select "form[action=?]", signup_path
   end
 
 end
