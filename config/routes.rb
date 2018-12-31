@@ -6,8 +6,9 @@ Rails.application.routes.draw do
   get '/about', to: 'static_pages#about'
   get '/contact', to: 'static_pages#contact'
   get '/signup', to: 'users#new'
+  post '/signup', to: 'users#create'
 
   resources :users
   # So /users shows all, /users/1 shows user with ID 1, /users/new makes one,
-  # /usr/1/edit, POST /Users, PATCH and DELETE /users/1 do stuff, etc.
+  # /usr/1/edit, POST /users, PATCH and DELETE /users/1 do stuff, etc.
 end
