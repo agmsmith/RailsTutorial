@@ -14,5 +14,9 @@ module SampleApp
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+
+    # Don't force HTTPS on all environments.
+    config.force_ssl = false
+    config.ssl_options = { redirect: false, secure_cookies: false, hsts: false }
   end
 end
