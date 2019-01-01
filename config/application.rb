@@ -17,6 +17,6 @@ module SampleApp
 
     # Don't force HTTPS on all environments.
     config.force_ssl = false
-    config.ssl_options = { redirect: false, secure_cookies: false, hsts: false }
+    # config.ssl_options = { redirect: false, secure_cookies: false, hsts: false }
   end
 end
