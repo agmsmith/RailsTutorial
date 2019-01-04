@@ -1,4 +1,5 @@
 module SessionsHelper
+  # Included by the application_controller so all controllers can do logins etc.
 
   # Logs in the given user (an instance of model class User).
   def log_in(user)
@@ -13,6 +14,11 @@ module SessionsHelper
 
   def logged_in?
     !current_user.nil?
+  end
+
+  def log_out
+    session.delete(:user_id)
+    @current_user = nil
   end
 
 end
