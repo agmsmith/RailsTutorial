@@ -50,6 +50,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_template 'users/show'
+    assert is_logged_in?, "Internal session state should be logged in."
     assert flash.count == 1,
       "Should be one item in the flash hash, have #{flash.count}."
     assert_select "div.alert-success", {count: 1,

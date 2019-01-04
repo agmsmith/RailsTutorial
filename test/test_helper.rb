@@ -10,4 +10,10 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   include ApplicationHelper # For full_title().
+
+  # Returns true if a user is logged in, peeks into the session data.
+  def is_logged_in?
+    !session[:user_id].nil?
+  end
+
 end

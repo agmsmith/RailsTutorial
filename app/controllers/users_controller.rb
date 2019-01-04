@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   def create # Second part of making a new user, store stuff from web form.
     @user = User.new(user_params) # Get cleaned up user input parameters.
     if @user.save
+      log_in @user # Auto-login newly created users, saves ID in the session.
       # flash shows up in rendering the following page, hidden in session.
       flash[:success] = "Welcome to the Sample Application, #{@user.name}!"
       # Handle a successful save, new user created!  Show their profile page.
