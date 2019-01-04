@@ -1,10 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# Can't use them now that we have a unique index by email in the database.
-#one:
-#  name: MyString
-#  email: MyString
+# Note that we require a unique index by email in the database.
 
-#two:
-#  name: MyString
-#  email: MyString
+michael:
+  name: Michael Example
+  email: michael@example.com
+  password_digest: <%= User.digest('password') %>
