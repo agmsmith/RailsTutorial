@@ -28,8 +28,14 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", user_path(@user)
     assert flash.empty?, "Flash should be empty after successful login."
     delete logout_path
-    assert_not is_logged_in?
+    assert_not is_logged_in?, "Should be logged out after hitting the logout page."
     assert_redirected_to root_url
+    follow_redirect!
+    assert_select "a[href=?]", login_path
+    assert_select "a[href=?]", logout_path, count: 0
+    assert_select "a[href=?]", user_path(@user), count: 0
+    # Simulate user clicking logout in a second window.
+    delete logout_path
     follow_redirect!
     assert_select "a[href=?]", login_path
     assert_select "a[href=?]", logout_path, count: 0

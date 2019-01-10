@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  before_save { email.downcase! }
+  attr_accessor :remember_token # Token digested and stored in remember_digest.
+  before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email,
@@ -16,4 +17,30 @@ class User < ApplicationRecord
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
+
+  # Returns a random token (base64 string, for URL safety using -_ rather than
+  # +/ characters, whole thing is 22 characters long).
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+  # Remember a user in the database for use in persistent sessions.  Creates a
+  # random token (saved in @remember_token) and saves the cryptographic digest
+  # of it in the database.  Returns true if save worked.
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
+  # Returns true if the given token matches the digest.
+  def authenticated?(remember_token)
+    return false if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+
+  # Forget the user (remove token from database).
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
+
 end
