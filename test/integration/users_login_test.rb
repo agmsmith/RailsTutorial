@@ -42,4 +42,19 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", user_path(@user), count: 0
   end
 
+  test "login with remembering" do
+    # Log in with the option to set the permanent login cookie.
+    log_in_as(@user, remember_me: '1')
+    # Verify that same random string token is in the cookie and Users instance.
+    assert_equal cookies['remember_token'], assigns(:user).remember_token
+  end
+
+  test "login without remembering" do
+    # Log in with the option to set the permanent login cookie.
+    log_in_as(@user, remember_me: '1')
+    # Log in again and verifiy that the cookie is deleted.
+    log_in_as(@user, remember_me: '0')
+    assert_empty cookies['remember_token'] # :remember_token malfunctions here.
+  end
+
 end
