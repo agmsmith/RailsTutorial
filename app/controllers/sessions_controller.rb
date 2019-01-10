@@ -8,7 +8,8 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # Log in the user and redirect to the user's show page.
       log_in user # Adds a session cookie with user's ID number.
-      remember user # Add a permanent cookie to skip future logins.
+      # Make a permanent cookie or delete it, for future login avoidance.
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       redirect_to user # Show the user's profile page.
     else # Wrong password or bad e-mail address.
       # Only show the flash on the next page, not on subsequent ones.
