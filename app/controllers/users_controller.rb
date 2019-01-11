@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
+      flash[:success] = "Profile updated."
       redirect_to @user
     else # Try again, reshow the form, with field error messages in red.
       render 'edit'
@@ -47,6 +47,7 @@ class UsersController < ApplicationController
     # Confirms that the user is logged in.
     def logged_in_user
       unless logged_in?
+        store_location # Save URL so user can try it again after logging in.
         flash[:danger] = "Please log in."
         redirect_to login_url
       end
