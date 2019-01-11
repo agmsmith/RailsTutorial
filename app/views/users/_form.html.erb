@@ -1,5 +1,4 @@
-    <% submit_url = yield(:submit_url) ; p submit_url %>
-
+    <% submit_url = yield(:submit_url) %>
     <%= form_for(@user, (submit_url.empty? ? {} : {url: submit_url})) do |f| %>
       <%= render 'shared/error_messages' %>
 
