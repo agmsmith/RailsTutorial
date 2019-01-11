@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def show
     @user = User.find(params[:id])
   end
@@ -17,6 +18,19 @@ class UsersController < ApplicationController
       redirect_to @user # Equivalent to user_url(@user), ends up as /users/123
     else
       render 'new'
+    end
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      raise # Handle a successful update.
+    else # Try again, reshow the form, with field error messages in red.
+      render 'edit'
     end
   end
 
