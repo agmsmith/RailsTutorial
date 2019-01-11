@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -37,7 +39,29 @@ class UsersController < ApplicationController
 
   private
 
-    def user_params # Filter out unwanted parameters, from web form.
+    # Filter out unwanted parameters, from web form.
+    def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
+
+    # Before filters.
+
+    # Confirms that the user is logged in.
+    def logged_in_user
+      unless logged_in?
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
+    end
+
+    # Confirms that the correct user is logged in (same ID specified by both
+    # the session cookie and the URL used to edit a User).
+    def correct_user
+      @user = User.find(params[:id])
+      unless current_user?(@user)
+        flash[:danger] = "Mismatch between logged in user and user being edited.  Please stop hacking URLs, and play nice!"
+        redirect_to root_url
+      end
+    end
+
 end
