@@ -20,7 +20,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   test "empty signup has enough error messages" do
     get signup_path
     post signup_path, params: { user: { name: "  " }}
-    N = 6
+    N = 4
     # Verify that there are N error messages.
     assert_select "div#error_explanation" do
       # assert_select "div.alert" do |alertdiv| p alertdiv.inner_text.squish end
