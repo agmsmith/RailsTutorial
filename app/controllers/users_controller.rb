@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :index, :update]
+  before_action :logged_in_user, only: [:edit, :index, :update, :destroy]
   before_action :correct_user, only: [:edit, :update] # Side effect: sets @user
+  before_action :admin_user, only: :destroy
 
   def index
     @users = User.paginate(page: params[:page])
@@ -25,6 +26,14 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def destroy
+    destroyee = User.find(params[:id]) # Raises ActiveRecord::RecordNotFound if not found.
+    destroyeeName = destroyee.name
+    destroyee.destroy
+    flash[:success] = "User \"#{destroyeeName}\" deleted."
+    redirect_to users_url
   end
 
   def edit
@@ -67,4 +76,8 @@ class UsersController < ApplicationController
       end
     end
 
+    # Confirms that the logged in user is an administrator.
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
 end
