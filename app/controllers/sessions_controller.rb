@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       log_in @user # Adds a session cookie with user's ID number.
       # Make a permanent cookie or delete it, for future login avoidance.
       params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_to @user # Show the user's profile page.
+      redirect_back_or @user # Default shows the user's profile page.
     else # Wrong password or bad e-mail address.
       # Only show the flash on the next page, not on subsequent ones.
       flash.now[:danger] = 'Invalid email & password combination.'

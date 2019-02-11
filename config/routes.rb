@@ -14,5 +14,5 @@ Rails.application.routes.draw do
 
   resources :users
   # So /users shows all, /users/1 shows user with ID 1, /users/new makes one,
-  # /usr/1/edit, POST /users, PATCH and DELETE /users/1 do stuff, etc.
+  # /users/1/edit, POST /users, PATCH and DELETE /users/1 do stuff, etc.
 end
