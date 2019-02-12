@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   resources :users
   # So /users shows all, /users/1 shows user with ID 1, /users/new makes one,
   # /users/1/edit, POST /users, PATCH and DELETE /users/1 do stuff, etc.
+
+  resources :account_activations, only: [:edit]
+
 end

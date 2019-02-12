@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   attr_accessor :remember_token # Token also digested and stored in remember_digest.
-  before_save { self.email = email.downcase }
+  attr_accessor :activation_token # Just kept in-memory, digest is stored in DB.
+  before_create :create_activation_digest # New records get a random token+digest.
+  before_save :downcase_email # For comparison consistency, always use lower case email.
   validates :name,
     presence: true,
     length: { maximum: 50 }
@@ -47,5 +49,17 @@ class User < ApplicationRecord
     return false if remember_digest.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
+
+  private
+
+    def create_activation_digest
+      # Create the token and digest, needed for new Users creation.
+      self.activation_token = User.new_token
+      self.activation_digest = User.digest(activation_token)
+    end
+
+    def downcase_email
+      email.downcase!
+    end
 
 end
