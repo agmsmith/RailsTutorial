@@ -15,14 +15,14 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def create # Second part of making a new user, store stuff from web form.
+  def create # Second part of making a new user, store stuff from web form,
+  # send an activation e-mail to check that the address is correct.
     @user = User.new(user_params) # Get cleaned up user input parameters.
     if @user.save
-      log_in @user # Auto-login newly created users, saves ID in the session.
+      UserMailer.account_activation(@user).deliver_now
       # flash shows up in rendering the following page, hidden in session.
-      flash[:success] = "Welcome to the Sample Application, #{@user.name}!"
-      # Handle a successful save, new user created!  Show their profile page.
-      redirect_to @user # Equivalent to user_url(@user), ends up as /users/123
+      flash[:info] = "Please check your email (#{@user.email}) to activate your account."
+      redirect_to root_url
     else
       render 'new'
     end
