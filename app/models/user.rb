@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   attr_accessor :remember_token # Token also digested and stored in remember_digest.
   attr_accessor :activation_token # Just kept in-memory, digest is stored in DB.
+  attr_accessor :reset_token # For resetting passwords, digest is stored in DB.
   before_create :create_activation_digest # New records get a random token+digest.
   before_save :downcase_email # For comparison consistency, always use lower case email.
   validates :name,
@@ -62,6 +63,17 @@ class User < ApplicationRecord
     UserMailer.account_activation(self).deliver_now
   end
 
+  # Sets the password reset attributes.
+  def create_reset_digest
+    self.reset_token = User.new_token
+    update_attribute(:reset_digest, User.digest(reset_token))
+    update_attribute(:reset_sent_at, Time.zone.now)
+  end
+
+  # Sends password reset email.
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
 
   private
 
