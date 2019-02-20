@@ -45,8 +45,8 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
 
-  # Returns true if the digest named by the attribute (:remember or :activation)
-  # matches the given token string.
+  # Returns true if the digest named by the attribute (:remember, :activation,
+  # or :reset for password reset) matches the given token string.
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
@@ -73,6 +73,10 @@ class User < ApplicationRecord
   # Sends password reset email.
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
+  end
+
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 
   private
