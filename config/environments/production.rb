@@ -66,12 +66,12 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  # Really should use http/https depending on their web site connection.
+  # Really should use http/https depending on the incoming web site connection.
   config.action_mailer.default_url_options = {
     host: 'www.agmsmith.ca', protocol: 'https' }
 
-  # Set this to true and configure the email server for immediate delivery
-  # to raise delivery errors.
+  # Set this to true and configure the email server for
+  # immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = true
 
   # Use :test for internal testing, :smtp for normal mail server.
