@@ -28,6 +28,7 @@ class PasswordResetsController < ApplicationController
       render 'edit'
     elsif @user.update_attributes(user_params)
       log_in @user
+      @user.update_attribute(:reset_digest, nil)
       flash[:success] = "Password has been reset."
       redirect_to @user
     else # Many validation errors possible, redisplay form with error warning.
@@ -49,7 +50,7 @@ private
   def valid_user
     unless (@user && @user.activated? &&
         @user.authenticated?(:reset, params[:id]))
-      flash[:info] = "Not a valid user."
+      flash[:info] = "Can't reset password, not a valid user or stale reset link used."
       redirect_to root_url
     end
   end
