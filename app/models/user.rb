@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :microposts # Related micropost records exist, some owned by this user.
+  has_many :microposts, dependent: :destroy  # Related micropost records, delete them on self destruct.
   attr_accessor :remember_token # Token also digested and stored in remember_digest.
   attr_accessor :activation_token # Just kept in-memory, digest is stored in DB.
   attr_accessor :reset_token # For resetting passwords, digest is stored in DB.
