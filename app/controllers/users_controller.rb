@@ -57,16 +57,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 
-    # Before filters.
-
-    # Confirms that the user is logged in.
-    def logged_in_user
-      unless logged_in?
-        store_location # Save URL so user can try it again after logging in.
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
+    # Before filters.  Also see parent class for more of them.
 
     # Confirms that the correct user is logged in (same ID specified by both
     # the session cookie and the URL used to edit a User).
