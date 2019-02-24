@@ -80,6 +80,13 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  # Defines a proto-feed, return a collection (or maybe an iterator) of
+  # Microposts relevant to this user.  See "Following users" for the full
+  # implementation later on.
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
+
   private
 
     def create_activation_digest
