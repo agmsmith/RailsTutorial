@@ -60,8 +60,8 @@ class User < ApplicationRecord
   end
 
   # Sends activation email.
-  def send_activation_email
-    UserMailer.account_activation(self).deliver_now
+  def send_activation_email(protocol_for_mailed_link)
+    UserMailer.account_activation(self, protocol_for_mailed_link).deliver_now
   end
 
   # Sets the password reset attributes.
@@ -72,8 +72,8 @@ class User < ApplicationRecord
   end
 
   # Sends password reset email.
-  def send_password_reset_email
-    UserMailer.password_reset(self).deliver_now
+  def send_password_reset_email(protocol_for_mailed_link)
+    UserMailer.password_reset(self, protocol_for_mailed_link).deliver_now
   end
 
   def password_reset_expired?

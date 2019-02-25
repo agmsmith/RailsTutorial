@@ -4,7 +4,7 @@ class UserMailerTest < ActionMailer::TestCase
   test "account_activation" do
     user = users(:michael)
     user.activation_token = User.new_token
-    mail = UserMailer.account_activation(user)
+    mail = UserMailer.account_activation(user, 'https://')
     assert_equal "Account Activation", mail.subject
     assert_equal [user.email], mail.to
     assert_equal ["agmsrepsys@gmail.com"], mail.from
@@ -16,7 +16,7 @@ class UserMailerTest < ActionMailer::TestCase
   test "password_reset" do
     user = users(:michael)
     user.reset_token = User.new_token
-    mail = UserMailer.password_reset(user)
+    mail = UserMailer.password_reset(user, 'https://')
     assert_equal "Password Reset", mail.subject
     assert_equal [user.email], mail.to
     assert_equal ["agmsrepsys@gmail.com"], mail.from

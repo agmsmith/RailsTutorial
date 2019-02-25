@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   # send an activation e-mail to check that the address is correct.
     @user = User.new(user_params) # Get cleaned up user input parameters.
     if @user.save
-      @user.send_activation_email
+      @user.send_activation_email(request.protocol) # Use http or https, same as requested.
       # flash shows up in rendering the following page, hidden in session.
       flash[:info] = "Please check your email (#{@user.email}) to activate your account."
       redirect_to root_url
