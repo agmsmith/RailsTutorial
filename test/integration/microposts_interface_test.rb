@@ -10,6 +10,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get root_path
     assert_select 'div.pagination' # Michael has pages of microposts.
+    assert_select 'input[type=file]'
     # Invalid submission, content length should be more than 0 characters.
     assert_no_difference 'Micropost.count' do
       post microposts_path, params: { micropost: { content: "" } }
@@ -17,9 +18,14 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_select 'div#error_explanation'
     # Valid submission
     content = "This micropost really ties the room together"
+    picture = fixture_file_upload('test/fixtures/files/kitten.jpg', 'image/jpeg')
     assert_difference 'Micropost.count', 1 do
-      post microposts_path, params: { micropost: { content: content } }
+      post microposts_path, params: { micropost: {
+        content: content,
+        picture: picture } }
     end
+    micropost = assigns(:micropost) # Rip @microposts from the controller, valid after create() done.
+    assert micropost.picture?
     assert_redirected_to root_url
     follow_redirect!
     assert_match content, response.body
