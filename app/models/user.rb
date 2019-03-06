@@ -1,10 +1,17 @@
 class User < ApplicationRecord
   has_many :microposts, dependent: :destroy  # Related micropost records, delete them on self destruct.
+  has_many :active_relationships,
+    class_name: 'Relationship',
+    foreign_key: 'follower_id',
+    dependent: :destroy
+
   attr_accessor :remember_token # Token also digested and stored in remember_digest.
   attr_accessor :activation_token # Just kept in-memory, digest is stored in DB.
   attr_accessor :reset_token # For resetting passwords, digest is stored in DB.
+
   before_create :create_activation_digest # New records get a random token+digest.
   before_save :downcase_email # For comparison consistency, always use lower case email.
+
   validates :name,
     presence: true,
     length: { maximum: 50 }
