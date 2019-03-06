@@ -104,12 +104,18 @@ class UserTest < ActiveSupport::TestCase
     archer = users(:archer)
     assert_not michael.following?(archer)
     assert_not archer.following?(michael)
+    assert_not archer.followers.include?(michael)
+    assert_not michael.followers.include?(archer)
     michael.follow(archer)
     assert michael.following?(archer)
     assert_not archer.following?(michael)
+    assert archer.followers.include?(michael)
+    assert_not michael.followers.include?(archer)
     michael.unfollow(archer)
     assert_not michael.following?(archer)
     assert_not archer.following?(michael)
+    assert_not archer.followers.include?(michael)
+    assert_not michael.followers.include?(archer)
   end
 
 end
