@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:edit, :index, :update, :destroy]
+  before_action :logged_in_user, only: [:edit, :index, :update, :destroy,
+    :following, :followers]
   before_action :correct_user, only: [:edit, :update] # Side effect: sets @user
   before_action :admin_user, only: :destroy
 
@@ -48,6 +49,20 @@ class UsersController < ApplicationController
     else # Try again, reshow the form, with field error messages in red.
       render 'edit'
     end
+  end
+
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.following.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
   end
 
   private

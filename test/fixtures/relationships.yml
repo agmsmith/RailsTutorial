@@ -3,3 +3,23 @@
 # one:
 #   follower_id: 1
 #   followed_id: 1
+
+# Set up some relationships, avoiding michael and archer which are tested
+# elsewhere (would get a duplicate relationship record if they were pre-created
+# here).
+
+lfm:
+  follower: lana
+  followed: malory
+
+mfu:
+  follower: malory
+  followed: user_1
+
+ufl:
+  follower: user_1
+  followed: lana
+
+ufm:
+  follower: user_1
+  followed: malory

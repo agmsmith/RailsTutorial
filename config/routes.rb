@@ -12,13 +12,17 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :users
   # So /users shows all, /users/1 shows user with ID 1, /users/new makes one,
-  # /users/1/edit, POST /users, PATCH and DELETE /users/1 do stuff, etc.
+  # /users/1/edit, POST /users, PATCH and DELETE /users/1 do stuff, etc,
+  # /users/1/following and /users/1/followers also exist.
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
 
   resources :account_activations, only: [:edit]
-
   resources :password_resets, only: [:new, :create, :edit, :update]
-
   resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 end
