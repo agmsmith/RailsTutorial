@@ -8,6 +8,22 @@
 # elsewhere (would get a duplicate relationship record if they were pre-created
 # here).
 
+one:
+  follower: michael
+  followed: lana
+
+two:
+  follower: michael
+  followed: malory
+
+three:
+  follower: lana
+  followed: michael
+
+four:
+  follower: archer
+  followed: michael
+
 lfm:
   follower: lana
   followed: malory

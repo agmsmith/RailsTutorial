@@ -18,5 +18,8 @@ module SampleApp
     # Don't force HTTPS on all environments.
     config.force_ssl = false
     # config.ssl_options = { redirect: false, secure_cookies: false, hsts: false }
+
+    # Include authenticity token in remote (JavaScript AJAX) forms.
+    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end
