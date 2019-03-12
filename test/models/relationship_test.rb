@@ -21,4 +21,9 @@ class RelationshipTest < ActiveSupport::TestCase
     assert_not @relationship.valid?
   end
 
+  test "should not follow yourself" do
+    @relationship.followed_id = @relationship.follower_id
+    assert_not @relationship.valid?
+  end
+
 end

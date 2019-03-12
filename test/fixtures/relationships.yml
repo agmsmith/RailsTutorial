@@ -24,17 +24,13 @@ four:
   follower: archer
   followed: michael
 
-lfm:
-  follower: lana
-  followed: malory
-
 mfu:
   follower: malory
   followed: user_1
 
-ufl:
+ufu:
   follower: user_1
-  followed: lana
+  followed: user_2
 
 ufm:
   follower: user_1

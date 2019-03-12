@@ -118,4 +118,23 @@ class UserTest < ActiveSupport::TestCase
     assert_not userA.followers.include?(userB)
   end
 
+  test "feed should have the posts of followers and self but nobody else" do
+    michael = users(:michael)
+    archer = users(:archer)
+    lana = users(:lana)
+    # mfl, mfma, lfm, afm
+    # Posts from followed user lana; michael follows lana.
+    lana.microposts.each do |post_following|
+      assert michael.feed.include?(post_following), "Should have Lana's posts since she's being followed."
+    end
+    # Posts from self should be included.
+    michael.microposts.each do |post_self|
+      assert michael.feed.include?(post_self), "Should have own posts."
+    end
+    # Posts from an unfollowed user shouldn't be there.
+    archer.microposts.each do |post_unfollowed|
+      assert_not michael.feed.include?(post_unfollowed), "Should not have unfollowed people's posts."
+    end
+  end
+
 end
